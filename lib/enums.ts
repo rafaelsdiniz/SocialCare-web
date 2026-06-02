@@ -89,14 +89,43 @@ export const TipoAuditoria: Record<number, string> = {
 };
 export const tipoAuditoriaOpcoes = opcoes(TipoAuditoria);
 
-// Cores semânticas (classes Tailwind) por status textual retornado pela API.
+// Rótulos amigáveis a partir do nome PascalCase do enum retornado pela API.
+export const rotulosStatus: Record<string, string> = {
+  Ativa: "Ativa",
+  EmAcompanhamento: "Em acompanhamento",
+  Inativa: "Inativa",
+  Desligada: "Desligada",
+  Agendada: "Agendada",
+  Realizada: "Realizada",
+  NaoRealizada: "Não realizada",
+  Cancelada: "Cancelada",
+  Aberto: "Aberto",
+  EmAndamento: "Em andamento",
+  Concluido: "Concluído",
+  Cancelado: "Cancelado",
+  EmAnalise: "Em análise",
+  Aprovado: "Aprovado",
+  Ativo: "Ativo",
+  Suspenso: "Suspenso",
+  Encerrado: "Encerrado",
+  Indeferido: "Indeferido",
+  Enviado: "Enviado",
+  Recebido: "Recebido",
+  EmAtendimento: "Em atendimento",
+  Recusado: "Recusado",
+  // Tipos de visita (também via ToString)
+  Domiciliar: "Domiciliar",
+  Institucional: "Institucional",
+  Emergencial: "Emergencial",
+  Acompanhamento: "Acompanhamento",
+};
+
+// Cores semânticas (classes Tailwind) por nome de status retornado pela API.
 export const corStatus: Record<string, string> = {
-  // Família
   Ativa: "bg-accent-100 text-accent-700",
   EmAcompanhamento: "bg-brand-100 text-brand-700",
   Inativa: "bg-slate-100 text-slate-600",
   Desligada: "bg-slate-200 text-slate-700",
-  // Visita / Atendimento
   Agendada: "bg-brand-100 text-brand-700",
   Realizada: "bg-accent-100 text-accent-700",
   NaoRealizada: "bg-amber-100 text-amber-700",
@@ -105,24 +134,44 @@ export const corStatus: Record<string, string> = {
   EmAndamento: "bg-amber-100 text-amber-700",
   Concluido: "bg-accent-100 text-accent-700",
   Cancelado: "bg-rose-100 text-rose-700",
-  // Benefício
   EmAnalise: "bg-amber-100 text-amber-700",
   Aprovado: "bg-brand-100 text-brand-700",
   Ativo: "bg-accent-100 text-accent-700",
   Suspenso: "bg-amber-100 text-amber-700",
   Encerrado: "bg-slate-100 text-slate-600",
   Indeferido: "bg-rose-100 text-rose-700",
-  // Encaminhamento
   Enviado: "bg-brand-100 text-brand-700",
   Recebido: "bg-brand-100 text-brand-700",
-  Concluído: "bg-accent-100 text-accent-700",
+  EmAtendimento: "bg-amber-100 text-amber-700",
   Recusado: "bg-rose-100 text-rose-700",
 };
 
 export function classeStatus(status?: string | null): string {
   if (!status) return "bg-slate-100 text-slate-600";
-  const chave = status.replace(/\s|ç|í|ã|é|ú|á/gi, (m) =>
-    ({ ç: "c", í: "i", ã: "a", é: "e", ú: "u", á: "a" }[m.toLowerCase()] ?? ""),
-  );
-  return corStatus[status] ?? corStatus[chave] ?? "bg-slate-100 text-slate-600";
+  return corStatus[status] ?? "bg-slate-100 text-slate-600";
 }
+
+export function rotuloStatus(status?: string | null): string {
+  if (!status) return "—";
+  return rotulosStatus[status] ?? status;
+}
+
+// Reversos nome→valor para preencher selects de edição.
+export const statusFamiliaValor: Record<string, number> = {
+  Ativa: 1,
+  EmAcompanhamento: 2,
+  Inativa: 3,
+  Desligada: 4,
+};
+export const statusAtendimentoValor: Record<string, number> = {
+  Aberto: 1,
+  EmAndamento: 2,
+  Concluido: 3,
+  Cancelado: 4,
+};
+export const tipoVisitaValor: Record<string, number> = {
+  Domiciliar: 1,
+  Institucional: 2,
+  Emergencial: 3,
+  Acompanhamento: 4,
+};

@@ -6,7 +6,7 @@ import type {
   SelectHTMLAttributes,
   TextareaHTMLAttributes,
 } from "react";
-import { classeStatus } from "@/lib/enums";
+import { classeStatus, rotuloStatus } from "@/lib/enums";
 import { IconChevronLeft, IconChevronRight } from "@/components/icons";
 
 export function cx(...classes: (string | false | null | undefined)[]): string {
@@ -139,7 +139,7 @@ export function Spinner({ className }: { className?: string }) {
 export function StatusBadge({ status }: { status?: string | null }) {
   return (
     <span className={cx("inline-flex rounded-full px-2.5 py-0.5 text-xs font-medium", classeStatus(status))}>
-      {status ?? "—"}
+      {rotuloStatus(status)}
     </span>
   );
 }
