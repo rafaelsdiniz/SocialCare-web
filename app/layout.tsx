@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/lib/auth";
 import { ToastProvider } from "@/components/Toast";
 
-const inter = Inter({
-  variable: "--font-inter",
+const jetBrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains",
   subsets: ["latin"],
 });
 
@@ -22,7 +22,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="pt-BR" className={`${inter.variable} h-full`}>
+    <html lang="pt-BR" className={`${jetBrainsMono.variable} h-full`}>
       <body className="min-h-full">
         <AuthProvider>
           <ToastProvider>{children}</ToastProvider>

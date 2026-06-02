@@ -5,7 +5,8 @@
   Primária #1F6FEB · Secundária #10B981 · Neutros #F8FAFC/#1E293B · Alerta #F59E0B
 */
 @theme {
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-jetbrains), ui-monospace, "SFMono-Regular", "Menlo", monospace;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
 
   /* Primária — teal/petróleo da logo */
   --color-brand-50: #ecfbfb;
