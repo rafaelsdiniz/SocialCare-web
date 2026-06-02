@@ -10,6 +10,7 @@ import { iniciais } from "@/lib/format";
 import { cx } from "@/components/ui";
 import { LogoFull } from "@/components/Logo";
 import { TelaCarregando } from "@/components/TelaCarregando";
+import { PageTransition } from "@/components/PageTransition";
 import { IconLogout, IconMenu, IconX } from "@/components/icons";
 
 export default function PainelLayout({ children }: { children: React.ReactNode }) {
@@ -114,7 +115,9 @@ export default function PainelLayout({ children }: { children: React.ReactNode }
         </header>
 
         <main className="flex-1 px-4 py-6 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-6xl">{children}</div>
+          <div className="mx-auto max-w-6xl">
+            <PageTransition>{children}</PageTransition>
+          </div>
         </main>
       </div>
     </div>

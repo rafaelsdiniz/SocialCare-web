@@ -81,3 +81,25 @@ body {
 .animate-fade-up {
   animation: sc-fade-up 0.5s ease-out both;
 }
+
+@keyframes sc-page {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-page {
+  animation: sc-page 0.38s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-page,
+  .animate-fade-up {
+    animation: none;
+  }
+}
