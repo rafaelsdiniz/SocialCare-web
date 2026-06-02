@@ -1,20 +1,13 @@
 import Link from "next/link";
-import { IconHands } from "@/components/icons";
+import { LogoFull } from "@/components/Logo";
 
 export function SiteFooter() {
   return (
     <footer className="border-t border-slate-200 bg-white">
       <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:px-6 md:grid-cols-3">
         <div>
-          <div className="flex items-center gap-2.5">
-            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-brand-600 text-white">
-              <IconHands />
-            </span>
-            <span className="text-lg font-bold tracking-tight text-ink">
-              Social<span className="text-brand-600">Care</span>
-            </span>
-          </div>
-          <p className="mt-3 max-w-xs text-sm text-slate-500">
+          <LogoFull className="h-10" />
+          <p className="mt-4 max-w-xs text-sm text-slate-500">
             Cuidar é transformar. Gestão de assistência social para órgãos públicos e organizações da sociedade civil.
           </p>
         </div>

@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useAuth } from "@/lib/auth";
 import { ApiError } from "@/lib/api";
 import { Botao, Campo, Entrada, AlertaErro } from "@/components/ui";
-import { IconHands } from "@/components/icons";
+import { LogoFull } from "@/components/Logo";
 
 function LoginForm() {
   const { entrar } = useAuth();
@@ -65,14 +65,9 @@ function LoginForm() {
 export default function LoginPage() {
   return (
     <div className="flex min-h-screen">
-      <div className="hidden flex-1 flex-col justify-between bg-gradient-to-br from-brand-600 to-brand-900 p-12 text-white lg:flex">
-        <Link href="/" className="flex items-center gap-2.5">
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/15">
-            <IconHands />
-          </span>
-          <span className="text-lg font-bold">
-            Social<span className="text-brand-200">Care</span>
-          </span>
+      <div className="hidden flex-1 flex-col justify-between bg-gradient-to-br from-navy-900 via-navy-800 to-brand-700 p-12 text-white lg:flex">
+        <Link href="/" className="w-fit rounded-2xl bg-white px-4 py-3 shadow-lg">
+          <LogoFull className="h-9" />
         </Link>
         <div>
           <h1 className="text-4xl font-bold leading-tight">Cuidar é transformar.</h1>
@@ -86,13 +81,8 @@ export default function LoginPage() {
 
       <div className="flex flex-1 items-center justify-center bg-mist px-4 py-12">
         <div className="w-full max-w-sm">
-          <Link href="/" className="mb-8 flex items-center justify-center gap-2.5 lg:hidden">
-            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-brand-600 text-white">
-              <IconHands />
-            </span>
-            <span className="text-lg font-bold text-ink">
-              Social<span className="text-brand-600">Care</span>
-            </span>
+          <Link href="/" className="mb-8 flex justify-center lg:hidden">
+            <LogoFull className="h-10" />
           </Link>
           <h2 className="text-2xl font-semibold text-ink">Acessar o sistema</h2>
           <p className="mt-1 text-sm text-slate-500">Entre com suas credenciais institucionais.</p>

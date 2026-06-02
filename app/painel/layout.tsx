@@ -7,8 +7,10 @@ import { useAuth } from "@/lib/auth";
 import { navItens, gruposNav } from "@/components/painel/nav";
 import { rotuloPerfil } from "@/lib/catalogos";
 import { iniciais } from "@/lib/format";
-import { cx, Spinner } from "@/components/ui";
-import { IconHands, IconLogout, IconMenu, IconX } from "@/components/icons";
+import { cx } from "@/components/ui";
+import { LogoFull } from "@/components/Logo";
+import { TelaCarregando } from "@/components/TelaCarregando";
+import { IconLogout, IconMenu, IconX } from "@/components/icons";
 
 export default function PainelLayout({ children }: { children: React.ReactNode }) {
   const { usuario, carregando, sair, temPerfil } = useAuth();
@@ -26,8 +28,8 @@ export default function PainelLayout({ children }: { children: React.ReactNode }
 
   if (carregando || !usuario) {
     return (
-      <div className="flex min-h-screen items-center justify-center text-slate-400">
-        <Spinner />
+      <div className="flex min-h-screen items-center justify-center">
+        <TelaCarregando />
       </div>
     );
   }
@@ -36,13 +38,8 @@ export default function PainelLayout({ children }: { children: React.ReactNode }
 
   const sidebar = (
     <div className="flex h-full flex-col">
-      <Link href="/painel" className="flex items-center gap-2.5 px-5 py-5">
-        <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-brand-600 text-white">
-          <IconHands />
-        </span>
-        <span className="text-lg font-bold text-ink">
-          Social<span className="text-brand-600">Care</span>
-        </span>
+      <Link href="/painel" className="flex items-center px-5 py-5">
+        <LogoFull className="h-9" />
       </Link>
 
       <nav className="flex-1 space-y-5 overflow-y-auto px-3 pb-6">

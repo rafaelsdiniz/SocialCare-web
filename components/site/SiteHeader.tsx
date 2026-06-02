@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { IconHands, IconMenu, IconX } from "@/components/icons";
+import { IconMenu, IconX } from "@/components/icons";
+import { LogoFull } from "@/components/Logo";
 import { cx } from "@/components/ui";
 
 const links = [
@@ -21,13 +22,8 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/90 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
-        <Link href="/" className="flex items-center gap-2.5">
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-brand-600 text-white">
-            <IconHands />
-          </span>
-          <span className="text-lg font-bold tracking-tight text-ink">
-            Social<span className="text-brand-600">Care</span>
-          </span>
+        <Link href="/" className="flex items-center">
+          <LogoFull className="h-9 sm:h-10" />
         </Link>
 
         <nav className="hidden items-center gap-1 md:flex">

@@ -7,17 +7,31 @@
 @theme {
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 
-  --color-brand-50: #eff6ff;
-  --color-brand-100: #dbeafe;
-  --color-brand-200: #bfdbfe;
-  --color-brand-300: #93c5fd;
-  --color-brand-400: #60a5fa;
-  --color-brand-500: #3b82f6;
-  --color-brand-600: #1f6feb;
-  --color-brand-700: #1d4ed8;
-  --color-brand-800: #1e40af;
-  --color-brand-900: #1e3a8a;
+  /* Primária — teal/petróleo da logo */
+  --color-brand-50: #ecfbfb;
+  --color-brand-100: #cef3f4;
+  --color-brand-200: #9fe7e9;
+  --color-brand-300: #66d3d8;
+  --color-brand-400: #34b9bf;
+  --color-brand-500: #1aa0a6;
+  --color-brand-600: #138a90;
+  --color-brand-700: #136f74;
+  --color-brand-800: #155a5e;
+  --color-brand-900: #154a4e;
 
+  /* Azul-marinho da logo — usado em texto, gradientes e contraste */
+  --color-navy-50: #eef4f8;
+  --color-navy-100: #d6e3ec;
+  --color-navy-200: #b0c8d9;
+  --color-navy-300: #7fa3bd;
+  --color-navy-400: #4a7799;
+  --color-navy-500: #2b5a7e;
+  --color-navy-600: #1d4c69;
+  --color-navy-700: #133b54;
+  --color-navy-800: #0e3a53;
+  --color-navy-900: #0a2536;
+
+  /* Secundária de apoio (sucesso) — esmeralda análoga ao teal */
   --color-accent-50: #ecfdf5;
   --color-accent-100: #d1fae5;
   --color-accent-200: #a7f3d0;
@@ -26,8 +40,8 @@
   --color-accent-600: #059669;
   --color-accent-700: #047857;
 
-  --color-ink: #1e293b;
-  --color-mist: #f8fafc;
+  --color-ink: #0e3a53;
+  --color-mist: #f6fafb;
   --color-warn: #f59e0b;
 }
 

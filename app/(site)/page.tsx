@@ -23,7 +23,7 @@ export default function HomePage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-brand-600 via-brand-700 to-brand-900 text-white">
+      <section className="relative overflow-hidden bg-gradient-to-br from-navy-900 via-navy-800 to-brand-700 text-white">
         <div className="absolute inset-0 opacity-20 [background-image:radial-gradient(circle_at_20%_20%,white_1px,transparent_1px)] [background-size:28px_28px]" />
         <div className="relative mx-auto max-w-6xl px-4 py-24 sm:px-6 sm:py-32">
           <div className="max-w-2xl animate-fade-up">
@@ -102,15 +102,15 @@ export default function HomePage() {
       </section>
 
       {/* CTA */}
-      <section className="bg-gradient-to-r from-accent-600 to-accent-500">
+      <section className="bg-gradient-to-r from-navy-800 to-brand-600">
         <div className="mx-auto flex max-w-6xl flex-col items-center gap-6 px-4 py-16 text-center text-white sm:px-6">
           <h2 className="text-3xl font-bold tracking-tight">Faça parte da rede de cuidado</h2>
-          <p className="max-w-xl text-accent-50">
+          <p className="max-w-xl text-brand-50">
             Equipes técnicas e parceiros institucionais acessam o sistema para transformar dados em ação.
           </p>
           <Link
             href="/login"
-            className="inline-flex items-center gap-2 rounded-lg bg-white px-6 py-3 text-sm font-semibold text-accent-700 transition hover:bg-accent-50"
+            className="inline-flex items-center gap-2 rounded-lg bg-white px-6 py-3 text-sm font-semibold text-brand-700 transition hover:bg-brand-50"
           >
             Entrar no sistema <IconArrowRight className="h-4 w-4" />
           </Link>
