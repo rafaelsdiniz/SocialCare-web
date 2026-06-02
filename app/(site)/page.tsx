@@ -37,13 +37,14 @@ export default function HomePage() {
         <div className="absolute inset-0 bg-gradient-to-t from-navy-900/60 via-transparent to-transparent" />
         <div className="relative mx-auto w-full max-w-6xl px-4 py-20 sm:px-6">
           <div className="max-w-2xl animate-fade-up">
-            <span className="inline-flex rounded-full bg-white/15 px-3 py-1 text-sm font-medium">
-              Gestão de assistência social
-            </span>
-            <h1 className="mt-5 text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
-              Cuidar é transformar.
+            <h1 className="text-5xl font-extrabold leading-[1.03] tracking-tight drop-shadow-sm sm:text-6xl lg:text-7xl">
+              Cuidar é<br />
+              <span className="bg-gradient-to-r from-brand-300 to-accent-400 bg-clip-text text-transparent">
+                transformar
+              </span>{" "}
+              vidas.
             </h1>
-            <p className="mt-5 max-w-xl text-lg text-brand-50">
+            <p className="mt-6 max-w-xl text-lg text-brand-50/90 sm:text-xl">
               O SocialCare conecta equipes do CRAS, CREAS e organizações sociais para acompanhar
               famílias em situação de vulnerabilidade com dados, agilidade e transparência.
             </p>
