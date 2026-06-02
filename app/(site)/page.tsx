@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { DestaqueProgramas, ResumoIndicadores } from "@/components/site/PublicWidgets";
 import {
   IconUsers,
@@ -23,9 +24,18 @@ export default function HomePage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-navy-900 via-navy-800 to-brand-700 text-white">
-        <div className="absolute inset-0 opacity-20 [background-image:radial-gradient(circle_at_20%_20%,white_1px,transparent_1px)] [background-size:28px_28px]" />
-        <div className="relative mx-auto max-w-6xl px-4 py-24 sm:px-6 sm:py-32">
+      <section className="relative flex min-h-[calc(100dvh-4rem)] items-center overflow-hidden text-white">
+        <Image
+          src="/hero.jpg"
+          alt="Assistente social acompanhando uma família em visita domiciliar"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-center"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-navy-900/95 via-navy-900/70 to-navy-900/25" />
+        <div className="absolute inset-0 bg-gradient-to-t from-navy-900/60 via-transparent to-transparent" />
+        <div className="relative mx-auto w-full max-w-6xl px-4 py-20 sm:px-6">
           <div className="max-w-2xl animate-fade-up">
             <span className="inline-flex rounded-full bg-white/15 px-3 py-1 text-sm font-medium">
               Gestão de assistência social
