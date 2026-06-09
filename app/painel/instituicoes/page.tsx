@@ -24,11 +24,13 @@ import {
 import { Modal } from "@/components/Modal";
 import { RequerPerfil } from "@/components/painel/RequerPerfil";
 import { useToast } from "@/components/Toast";
+import { useConfirmacao } from "@/components/Confirmacao";
 import { GESTAO } from "@/lib/auth";
 import { IconPlus, IconSearch } from "@/components/icons";
 
 function Conteudo() {
   const toast = useToast();
+  const confirmar = useConfirmacao();
   const [busca, setBusca] = useState("");
   const [ativo, setAtivo] = useState("");
   const [pagina, setPagina] = useState(1);
@@ -54,7 +56,7 @@ function Conteudo() {
   }
 
   async function inativar(id: number, nome: string) {
-    if (!confirm(`Inativar "${nome}"?`)) return;
+    if (!(await confirmar({ mensagem: `Inativar "${nome}"?`, confirmar: "Inativar", perigo: true }))) return;
     try {
       await apiFetch(`/api/instituicoes-parceiras/${id}`, { method: "DELETE" });
       toast.sucesso("Instituição inativada.");

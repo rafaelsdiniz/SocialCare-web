@@ -24,12 +24,14 @@ import {
 import { Modal } from "@/components/Modal";
 import { MembroForm } from "@/components/painel/MembroForm";
 import { useToast } from "@/components/Toast";
+import { useConfirmacao } from "@/components/Confirmacao";
 import { IconChevronLeft, IconPlus, IconCalendar, IconClipboard, IconGift, IconShare } from "@/components/icons";
 
 export default function FamiliaDetalhePage() {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
   const toast = useToast();
+  const confirmar = useConfirmacao();
   const { temPerfil } = useAuth();
   const podeGerir = temPerfil(...GESTAO);
 
@@ -72,7 +74,7 @@ export default function FamiliaDetalhePage() {
   }
 
   async function removerMembro(membroId: number, nome: string) {
-    if (!confirm(`Remover o membro "${nome}"?`)) return;
+    if (!(await confirmar({ mensagem: `Remover o membro "${nome}"?`, confirmar: "Remover", perigo: true }))) return;
     try {
       await apiFetch(`/api/familias/${id}/membros/${membroId}`, { method: "DELETE" });
       toast.sucesso("Membro removido.");
@@ -84,7 +86,7 @@ export default function FamiliaDetalhePage() {
   }
 
   async function inativarFamilia() {
-    if (!confirm("Inativar esta família? Ela deixará de aparecer nas listas ativas.")) return;
+    if (!(await confirmar({ titulo: "Inativar família", mensagem: "Ela deixará de aparecer nas listas ativas. Deseja continuar?", confirmar: "Inativar", perigo: true }))) return;
     try {
       await apiFetch(`/api/familias/${id}`, { method: "DELETE" });
       toast.sucesso("Família inativada.");

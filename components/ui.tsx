@@ -33,7 +33,7 @@ export function Botao({
   return (
     <button
       className={cx(
-        "inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-60",
+        "inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-60",
         variantes[variante],
         className,
       )}
@@ -244,6 +244,7 @@ export function Paginacao({
         <button
           onClick={() => aoMudar(pagina - 1)}
           disabled={pagina <= 1}
+          aria-label="Página anterior"
           className="rounded-lg border border-slate-300 p-1.5 text-slate-600 hover:bg-slate-50 disabled:opacity-40"
         >
           <IconChevronLeft className="h-4 w-4" />
@@ -251,6 +252,7 @@ export function Paginacao({
         <button
           onClick={() => aoMudar(pagina + 1)}
           disabled={pagina >= totalPaginas}
+          aria-label="Próxima página"
           className="rounded-lg border border-slate-300 p-1.5 text-slate-600 hover:bg-slate-50 disabled:opacity-40"
         >
           <IconChevronRight className="h-4 w-4" />

@@ -3,10 +3,12 @@
 import { Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { useAuth } from "@/lib/auth";
 import { ApiError } from "@/lib/api";
 import { Botao, Campo, Entrada, AlertaErro } from "@/components/ui";
 import { LogoFull } from "@/components/Logo";
+import { IconShield } from "@/components/icons";
 
 function LoginForm() {
   const { entrar } = useAuth();
@@ -65,32 +67,83 @@ function LoginForm() {
 export default function LoginPage() {
   return (
     <div className="flex min-h-screen">
+      {/* Painel institucional */}
       <div className="hidden flex-1 flex-col justify-between bg-gradient-to-br from-navy-900 via-navy-800 to-brand-700 p-12 text-white lg:flex">
-        <Link href="/" className="w-fit rounded-2xl bg-white px-4 py-3 shadow-lg">
-          <LogoFull className="h-9" />
-        </Link>
+        <div className="flex items-center gap-5">
+          <Image
+            src="/tocantins.png"
+            alt="Governo do Estado do Tocantins"
+            width={320}
+            height={320}
+            className="h-14 w-14 object-contain"
+          />
+          <span className="h-12 w-px bg-white/25" aria-hidden />
+          <Image
+            src="/brasil.png"
+            alt="Governo Federal do Brasil"
+            width={1066}
+            height={513}
+            className="h-9 w-auto object-contain"
+          />
+        </div>
+
         <div>
-          <h1 className="text-4xl font-bold leading-tight">Cuidar é transformar.</h1>
+          <p className="text-xs font-semibold uppercase tracking-wider text-brand-200">
+            Governo do Estado do Tocantins
+          </p>
+          <h1 className="mt-2 text-4xl font-bold leading-tight">Cuidar é transformar.</h1>
           <p className="mt-4 max-w-md text-brand-50">
-            Acesse o sistema para acompanhar famílias, benefícios, visitas e atendimentos da rede de
-            assistência social.
+            Plataforma oficial de gestão da assistência social. Acompanhe famílias, benefícios,
+            visitas e atendimentos da rede pública.
           </p>
         </div>
-        <p className="text-sm text-brand-100">© {new Date().getFullYear()} SocialCare</p>
+
+        <p className="text-sm text-brand-100">
+          © {new Date().getFullYear()} SocialCare · Governo do Estado do Tocantins
+        </p>
       </div>
 
+      {/* Formulário */}
       <div className="flex flex-1 items-center justify-center bg-mist px-4 py-12">
         <div className="w-full max-w-sm">
-          <Link href="/" className="mb-8 flex justify-center lg:hidden">
+          <Link href="/" className="mb-8 flex justify-center">
             <LogoFull className="h-10" />
           </Link>
-          <h2 className="text-2xl font-semibold text-ink">Acessar o sistema</h2>
-          <p className="mt-1 text-sm text-slate-500">Entre com suas credenciais institucionais.</p>
-          <div className="mt-6">
-            <Suspense fallback={null}>
-              <LoginForm />
-            </Suspense>
+
+          <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+            <h2 className="text-2xl font-semibold text-ink">Acessar o sistema</h2>
+            <p className="mt-1 text-sm text-slate-500">Entre com suas credenciais institucionais.</p>
+            <div className="mt-6">
+              <Suspense fallback={null}>
+                <LoginForm />
+              </Suspense>
+            </div>
           </div>
+
+          <p className="mt-5 flex items-center justify-center gap-2 text-xs text-slate-400">
+            <IconShield className="h-3.5 w-3.5" />
+            Acesso restrito a equipes do CRAS/CREAS e parceiros autorizados.
+          </p>
+
+          {/* Selo de governo (visível no mobile, onde o painel lateral some) */}
+          <div className="mt-6 flex items-center justify-center gap-4 opacity-70 lg:hidden">
+            <Image
+              src="/tocantins.png"
+              alt="Governo do Estado do Tocantins"
+              width={320}
+              height={320}
+              className="h-9 w-9 object-contain"
+            />
+            <span className="h-7 w-px bg-slate-300" aria-hidden />
+            <Image
+              src="/brasil.png"
+              alt="Governo Federal do Brasil"
+              width={1066}
+              height={513}
+              className="h-6 w-auto object-contain"
+            />
+          </div>
+
           <p className="mt-6 text-center text-sm text-slate-500">
             <Link href="/" className="font-medium text-brand-600 hover:text-brand-700">
               ← Voltar ao site

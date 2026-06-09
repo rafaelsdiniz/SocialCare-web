@@ -4,7 +4,7 @@ import { useState } from "react";
 import type { Membro, MembroRequest } from "@/lib/types";
 import { sexoOpcoes, estadoCivilOpcoes } from "@/lib/enums";
 import { parentescos, tiposDocumento, tiposRenda } from "@/lib/catalogos";
-import { paraInputDate } from "@/lib/format";
+import { paraInputDate, dataInputParaIso, hojeInputDate } from "@/lib/format";
 import { Botao, Campo, Entrada, AreaTexto, Selecao } from "@/components/ui";
 import { IconPlus, IconX } from "@/components/icons";
 
@@ -22,6 +22,7 @@ interface RendaLinha {
 }
 
 const agora = new Date();
+const HOJE = hojeInputDate();
 
 export function MembroForm({
   inicial,
@@ -46,6 +47,7 @@ export function MembroForm({
   const [pcd, setPcd] = useState(inicial?.pessoaComDeficiencia ?? false);
   const [descPcd, setDescPcd] = useState(inicial?.descricaoDeficiencia ?? "");
   const [telefone, setTelefone] = useState(inicial?.telefone ?? "");
+  const [erroData, setErroData] = useState<string | null>(null);
   const [docs, setDocs] = useState<DocLinha[]>(
     inicial?.documentos.map((d) => ({ tipoDocumentoId: d.tipoDocumentoId, numero: d.numero, orgaoEmissor: d.orgaoEmissor ?? "" })) ?? [],
   );
@@ -61,9 +63,15 @@ export function MembroForm({
 
   function submeter(e: React.FormEvent) {
     e.preventDefault();
+    const dataIso = dataInputParaIso(dataNascimento);
+    if (!dataIso || dataNascimento > HOJE) {
+      setErroData(!dataIso ? "Informe uma data de nascimento válida." : "A data de nascimento não pode ser futura.");
+      return;
+    }
+    setErroData(null);
     const req: MembroRequest = {
       nome: nome.trim(),
-      dataNascimento: new Date(dataNascimento).toISOString(),
+      dataNascimento: dataIso,
       sexo,
       estadoCivil,
       parentescoId,
@@ -97,7 +105,18 @@ export function MembroForm({
           <Entrada value={nome} onChange={(e) => setNome(e.target.value)} required />
         </Campo>
         <Campo label="Data de nascimento" obrigatorio>
-          <Entrada type="date" value={dataNascimento} onChange={(e) => setDataNascimento(e.target.value)} required />
+          <Entrada
+            type="date"
+            min="1900-01-01"
+            max={HOJE}
+            value={dataNascimento}
+            onChange={(e) => {
+              setDataNascimento(e.target.value);
+              if (erroData) setErroData(null);
+            }}
+            required
+          />
+          {erroData && <p className="mt-1 text-xs text-rose-600">{erroData}</p>}
         </Campo>
         <Campo label="Sexo">
           <Selecao value={sexo} onChange={(e) => setSexo(Number(e.target.value))}>

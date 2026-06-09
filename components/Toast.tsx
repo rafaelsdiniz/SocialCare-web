@@ -50,7 +50,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
           >
             {t.tipo === "sucesso" ? <IconCheck className="mt-0.5 h-4 w-4 shrink-0" /> : t.tipo === "erro" ? <IconAlert className="mt-0.5 h-4 w-4 shrink-0" /> : <IconCheck className="mt-0.5 h-4 w-4 shrink-0" />}
             <span className="flex-1 text-slate-700">{t.mensagem}</span>
-            <button onClick={() => setItens((xs) => xs.filter((x) => x.id !== t.id))} className="text-slate-400 hover:text-slate-600">
+            <button onClick={() => setItens((xs) => xs.filter((x) => x.id !== t.id))} aria-label="Fechar notificação" className="text-slate-400 hover:text-slate-600">
               <IconX className="h-4 w-4" />
             </button>
           </div>

@@ -34,6 +34,7 @@ import { Modal } from "@/components/Modal";
 import { SeletorFamilia } from "@/components/painel/SeletorFamilia";
 import { RequerPerfil } from "@/components/painel/RequerPerfil";
 import { useToast } from "@/components/Toast";
+import { useConfirmacao } from "@/components/Confirmacao";
 import { GESTAO } from "@/lib/auth";
 import { IconPlus } from "@/components/icons";
 
@@ -41,6 +42,7 @@ function Conteudo() {
   const params = useSearchParams();
   const familiaIdUrl = params.get("familiaId");
   const toast = useToast();
+  const confirmar = useConfirmacao();
 
   const [status, setStatus] = useState("");
   const [pagina, setPagina] = useState(1);
@@ -64,7 +66,7 @@ function Conteudo() {
   }
 
   async function aprovar(id: number) {
-    if (!confirm("Aprovar este benefício?")) return;
+    if (!(await confirmar({ mensagem: "Aprovar este benefício?", confirmar: "Aprovar" }))) return;
     try {
       await apiFetch(`/api/beneficios/${id}/aprovar`, { method: "POST" });
       toast.sucesso("Benefício aprovado.");

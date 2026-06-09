@@ -1,6 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
-import { DestaqueProgramas, ResumoIndicadores } from "@/components/site/PublicWidgets";
+import { PainelIndicadores } from "@/components/site/PainelIndicadores";
+import { MapaFamilias } from "@/components/site/MapaFamilias";
+import { CarrosselProgramas } from "@/components/site/CarrosselProgramas";
+import { SeloGoverno } from "@/components/site/SeloGoverno";
 import {
   IconUsers,
   IconGift,
@@ -72,7 +75,20 @@ export default function HomePage() {
           <h2 className="text-2xl font-bold tracking-tight text-ink">Impacto em números</h2>
           <p className="mt-2 text-sm text-slate-500">Dados agregados e anonimizados, atualizados continuamente.</p>
         </div>
-        <ResumoIndicadores />
+        <PainelIndicadores />
+      </section>
+
+      {/* Onde atuamos — mapa das famílias acompanhadas */}
+      <section className="bg-white">
+        <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+          <div className="mb-8 text-center">
+            <h2 className="text-2xl font-bold tracking-tight text-ink">Onde atuamos</h2>
+            <p className="mt-2 text-sm text-slate-500">
+              Distribuição territorial das famílias acompanhadas, de forma agregada e anonimizada.
+            </p>
+          </div>
+          <MapaFamilias />
+        </div>
       </section>
 
       {/* Recursos */}
@@ -98,35 +114,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Programas em destaque */}
-      <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
-        <div className="mb-10 flex flex-wrap items-end justify-between gap-4">
-          <div>
-            <h2 className="text-3xl font-bold tracking-tight text-ink">Programas em destaque</h2>
-            <p className="mt-2 text-slate-500">Iniciativas disponíveis para as famílias acompanhadas.</p>
-          </div>
-          <Link href="/programas" className="inline-flex items-center gap-1.5 text-sm font-medium text-brand-600 hover:text-brand-700">
-            Ver todos <IconArrowRight className="h-4 w-4" />
-          </Link>
-        </div>
-        <DestaqueProgramas />
-      </section>
+      {/* Programas em destaque — carrossel acionado pela rolagem */}
+      <CarrosselProgramas />
 
-      {/* CTA */}
-      <section className="bg-gradient-to-r from-navy-800 to-brand-600">
-        <div className="mx-auto flex max-w-6xl flex-col items-center gap-6 px-4 py-16 text-center text-white sm:px-6">
-          <h2 className="text-3xl font-bold tracking-tight">Faça parte da rede de cuidado</h2>
-          <p className="max-w-xl text-brand-50">
-            Equipes técnicas e parceiros institucionais acessam o sistema para transformar dados em ação.
-          </p>
-          <Link
-            href="/login"
-            className="inline-flex items-center gap-2 rounded-lg bg-white px-6 py-3 text-sm font-semibold text-brand-700 transition hover:bg-brand-50"
-          >
-            Entrar no sistema <IconArrowRight className="h-4 w-4" />
-          </Link>
-        </div>
-      </section>
+      {/* Selo institucional do governo */}
+      <SeloGoverno />
     </>
   );
 }

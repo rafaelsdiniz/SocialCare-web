@@ -78,7 +78,9 @@ export default function PainelLayout({ children }: { children: React.ReactNode }
   return (
     <div className="flex min-h-screen bg-mist">
       {/* Sidebar desktop */}
-      <aside className="hidden w-64 shrink-0 border-r border-slate-200 bg-white lg:block">{sidebar}</aside>
+      <aside className="sticky top-0 hidden h-screen w-64 shrink-0 border-r border-slate-200 bg-white lg:block">
+        {sidebar}
+      </aside>
 
       {/* Sidebar mobile */}
       {menuAberto && (
@@ -108,6 +110,7 @@ export default function PainelLayout({ children }: { children: React.ReactNode }
               }}
               className="rounded-lg p-2 text-slate-500 hover:bg-slate-100 hover:text-rose-600"
               title="Sair"
+              aria-label="Sair"
             >
               <IconLogout className="h-[18px] w-[18px]" />
             </button>

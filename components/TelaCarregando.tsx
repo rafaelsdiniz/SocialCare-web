@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { LogoMark } from "@/components/Logo";
 
 export function TelaCarregando({ texto = "Carregando..." }: { texto?: string }) {
@@ -14,6 +15,23 @@ export function TelaCarregando({ texto = "Carregando..." }: { texto?: string }) 
           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 0 1 8-8v4a4 4 0 0 0-4 4H4Z" />
         </svg>
         {texto}
+      </div>
+      <div className="mt-2 flex items-center gap-4 opacity-80">
+        <Image
+          src="/tocantins.png"
+          alt="Governo do Estado do Tocantins"
+          width={320}
+          height={320}
+          className="h-9 w-9 object-contain"
+        />
+        <span className="h-7 w-px bg-slate-300" aria-hidden />
+        <Image
+          src="/brasil.png"
+          alt="Governo Federal do Brasil"
+          width={1066}
+          height={513}
+          className="h-6 w-auto object-contain"
+        />
       </div>
     </div>
   );

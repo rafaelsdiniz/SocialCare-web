@@ -45,7 +45,14 @@ export interface ProgramaPublico {
   descricao?: string | null;
   orgaoResponsavel: string;
   requisitos?: string | null;
+  iconeBase64?: string | null;
   valorPadrao?: number | null;
+}
+
+export interface ProgramaPublicoDetalhe extends ProgramaPublico {
+  duracaoMesesPadrao?: number | null;
+  vigenciaInicio?: string | null;
+  vigenciaFim?: string | null;
 }
 
 export interface IndicadorPorUf {
@@ -56,14 +63,41 @@ export interface IndicadorPorPrograma {
   programa: string;
   quantidade: number;
 }
+export interface IndicadorPorMunicipio {
+  municipio: string;
+  quantidade: number;
+}
+export interface IndicadorPorStatus {
+  status: string;
+  quantidade: number;
+}
 export interface Indicadores {
   totalFamiliasAtivas: number;
   totalMembros: number;
   totalBeneficiosAtivos: number;
   totalProgramas: number;
   totalVisitasUltimos30Dias: number;
+  populacaoAbrangida: number;
   familiasPorUf: IndicadorPorUf[];
   beneficiosPorPrograma: IndicadorPorPrograma[];
+  familiasPorMunicipio: IndicadorPorMunicipio[];
+  familiasPorStatus: IndicadorPorStatus[];
+}
+
+export interface ContextoFederal {
+  disponivel: boolean;
+  municipiosConsultados: number;
+  beneficiarios: number;
+  valorTotal: number;
+  ano?: number | null;
+  mes?: number | null;
+}
+
+export interface PontoMapa {
+  lat: number;
+  lng: number;
+  municipio: string;
+  familias: number;
 }
 
 export interface CepResponse {
@@ -389,6 +423,7 @@ export interface ProgramaResumo {
   id: number;
   nome: string;
   orgaoResponsavel: string;
+  iconeBase64?: string | null;
   valorPadrao?: number | null;
   ativo: boolean;
 }
@@ -398,6 +433,7 @@ export interface Programa {
   orgaoResponsavel: string;
   descricao?: string | null;
   requisitos?: string | null;
+  iconeBase64?: string | null;
   valorPadrao?: number | null;
   duracaoMesesPadrao?: number | null;
   vigenciaInicio?: string | null;
@@ -411,6 +447,7 @@ export interface ProgramaRequest {
   orgaoResponsavel: string;
   descricao?: string | null;
   requisitos?: string | null;
+  iconeBase64?: string | null;
   valorPadrao?: number | null;
   duracaoMesesPadrao?: number | null;
   vigenciaInicio?: string | null;

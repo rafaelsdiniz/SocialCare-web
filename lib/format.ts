@@ -41,6 +41,21 @@ export function paraInputDateTime(iso?: string | null): string {
   return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
 }
 
+// Converte um valor de <input type="date"> (YYYY-MM-DD) para ISO completo.
+// Exige ano de 4 dígitos — evita datas fora do range (ex.: ano "20005" estoura o DateTime do .NET).
+export function dataInputParaIso(valor?: string | null): string | null {
+  if (!valor || !/^\d{4}-\d{2}-\d{2}$/.test(valor)) return null;
+  const d = new Date(`${valor}T00:00:00`);
+  return Number.isNaN(d.getTime()) ? null : d.toISOString();
+}
+
+// Data de hoje no formato YYYY-MM-DD (para usar em min/max de <input type="date">).
+export function hojeInputDate(): string {
+  const d = new Date();
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+}
+
 // Para <input type="date"> a partir de ISO.
 export function paraInputDate(iso?: string | null): string {
   if (!iso) return "";

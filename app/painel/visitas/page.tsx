@@ -26,12 +26,14 @@ import {
 import { Modal } from "@/components/Modal";
 import { SeletorFamilia } from "@/components/painel/SeletorFamilia";
 import { useToast } from "@/components/Toast";
+import { useConfirmacao } from "@/components/Confirmacao";
 import { IconPlus } from "@/components/icons";
 
 function VisitasConteudo() {
   const params = useSearchParams();
   const familiaIdUrl = params.get("familiaId");
   const toast = useToast();
+  const confirmar = useConfirmacao();
 
   const [status, setStatus] = useState("");
   const [pagina, setPagina] = useState(1);
@@ -56,7 +58,7 @@ function VisitasConteudo() {
   }
 
   async function cancelar(id: number) {
-    if (!confirm("Cancelar esta visita?")) return;
+    if (!(await confirmar({ mensagem: "Cancelar esta visita?", confirmar: "Cancelar visita", perigo: true }))) return;
     try {
       await apiFetch(`/api/visitas/${id}/cancelar`, { method: "POST" });
       toast.sucesso("Visita cancelada.");

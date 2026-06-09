@@ -3,6 +3,7 @@ import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/lib/auth";
 import { ToastProvider } from "@/components/Toast";
+import { ConfirmacaoProvider } from "@/components/Confirmacao";
 import { Splash } from "@/components/Splash";
 
 const jetBrainsMono = JetBrains_Mono({
@@ -27,8 +28,10 @@ export default function RootLayout({
       <body className="min-h-full">
         <AuthProvider>
           <ToastProvider>
-            <Splash />
-            {children}
+            <ConfirmacaoProvider>
+              <Splash />
+              {children}
+            </ConfirmacaoProvider>
           </ToastProvider>
         </AuthProvider>
       </body>

@@ -5,7 +5,6 @@ import { apiFetch, ApiError } from "@/lib/api";
 import { useFetch, useDebounce } from "@/lib/hooks";
 import type { CriarUsuarioRequest, PagedResult, Usuario, UsuarioResumo } from "@/lib/types";
 import { perfis as catalogoPerfis, rotuloPerfil } from "@/lib/catalogos";
-import { dataHora } from "@/lib/format";
 import {
   CabecalhoPagina,
   Botao,
@@ -24,11 +23,13 @@ import {
 import { Modal } from "@/components/Modal";
 import { RequerPerfil } from "@/components/painel/RequerPerfil";
 import { useToast } from "@/components/Toast";
+import { useConfirmacao } from "@/components/Confirmacao";
 import { ADMIN } from "@/lib/auth";
 import { IconPlus, IconSearch } from "@/components/icons";
 
 function Conteudo() {
   const toast = useToast();
+  const confirmar = useConfirmacao();
   const [busca, setBusca] = useState("");
   const [ativo, setAtivo] = useState("");
   const [pagina, setPagina] = useState(1);
@@ -55,7 +56,7 @@ function Conteudo() {
   }
 
   async function inativar(id: number, nome: string) {
-    if (!confirm(`Inativar o usuário "${nome}"?`)) return;
+    if (!(await confirmar({ mensagem: `Inativar o usuário "${nome}"?`, confirmar: "Inativar", perigo: true }))) return;
     try {
       await apiFetch(`/api/usuarios/${id}`, { method: "DELETE" });
       toast.sucesso("Usuário inativado.");

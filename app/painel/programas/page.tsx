@@ -24,11 +24,43 @@ import {
 import { Modal } from "@/components/Modal";
 import { RequerPerfil } from "@/components/painel/RequerPerfil";
 import { useToast } from "@/components/Toast";
+import { useConfirmacao } from "@/components/Confirmacao";
 import { GESTAO } from "@/lib/auth";
-import { IconPlus, IconSearch } from "@/components/icons";
+import { IconPlus, IconSearch, IconGift } from "@/components/icons";
+
+/** Lê uma imagem, redimensiona (máx. 1100px) e devolve um data URL JPEG leve. */
+async function arquivoParaIcone(file: File): Promise<string> {
+  const dataUrl = await new Promise<string>((resolve, reject) => {
+    const r = new FileReader();
+    r.onload = () => resolve(r.result as string);
+    r.onerror = () => reject(new Error("Falha ao ler o arquivo."));
+    r.readAsDataURL(file);
+  });
+  const img = await new Promise<HTMLImageElement>((resolve, reject) => {
+    const i = new window.Image();
+    i.onload = () => resolve(i);
+    i.onerror = () => reject(new Error("Imagem inválida."));
+    i.src = dataUrl;
+  });
+  const max = 1100;
+  const escala = Math.min(1, max / Math.max(img.width, img.height));
+  const w = Math.round(img.width * escala);
+  const h = Math.round(img.height * escala);
+  const canvas = document.createElement("canvas");
+  canvas.width = w;
+  canvas.height = h;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return dataUrl;
+  // Fundo branco para fotos com transparência não virarem preto no JPEG.
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(0, 0, w, h);
+  ctx.drawImage(img, 0, 0, w, h);
+  return canvas.toDataURL("image/jpeg", 0.85);
+}
 
 function Conteudo() {
   const toast = useToast();
+  const confirmar = useConfirmacao();
   const [busca, setBusca] = useState("");
   const [ativo, setAtivo] = useState("");
   const [pagina, setPagina] = useState(1);
@@ -54,7 +86,7 @@ function Conteudo() {
   }
 
   async function inativar(id: number, nome: string) {
-    if (!confirm(`Inativar o programa "${nome}"?`)) return;
+    if (!(await confirmar({ mensagem: `Inativar o programa "${nome}"?`, confirmar: "Inativar", perigo: true }))) return;
     try {
       await apiFetch(`/api/programas/${id}`, { method: "DELETE" });
       toast.sucesso("Programa inativado.");
@@ -140,6 +172,7 @@ function ProgramaModal({ programa, aoFechar, aoSalvar }: { programa: Programa | 
   const [orgao, setOrgao] = useState(programa?.orgaoResponsavel ?? "");
   const [descricao, setDescricao] = useState(programa?.descricao ?? "");
   const [requisitos, setRequisitos] = useState(programa?.requisitos ?? "");
+  const [icone, setIcone] = useState<string | null>(programa?.iconeBase64 ?? null);
   const [valor, setValor] = useState(programa?.valorPadrao != null ? String(programa.valorPadrao) : "");
   const [duracao, setDuracao] = useState(programa?.duracaoMesesPadrao != null ? String(programa.duracaoMesesPadrao) : "");
   const [vigInicio, setVigInicio] = useState(paraInputDate(programa?.vigenciaInicio));
@@ -155,6 +188,7 @@ function ProgramaModal({ programa, aoFechar, aoSalvar }: { programa: Programa | 
       orgaoResponsavel: orgao.trim(),
       descricao: descricao.trim() || null,
       requisitos: requisitos.trim() || null,
+      iconeBase64: icone,
       valorPadrao: valor ? Number(valor) : null,
       duracaoMesesPadrao: duracao ? Number(duracao) : null,
       vigenciaInicio: vigInicio ? new Date(vigInicio).toISOString() : null,
@@ -184,6 +218,41 @@ function ProgramaModal({ programa, aoFechar, aoSalvar }: { programa: Programa | 
         </div>
         <Campo label="Descrição"><AreaTexto value={descricao} onChange={(e) => setDescricao(e.target.value)} /></Campo>
         <Campo label="Requisitos"><AreaTexto value={requisitos} onChange={(e) => setRequisitos(e.target.value)} /></Campo>
+        <Campo label="Imagem do programa">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-start">
+            {icone ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={icone} alt="Imagem do programa" className="h-28 w-44 shrink-0 rounded-xl border border-slate-200 object-cover" />
+            ) : (
+              <div className="flex h-28 w-44 shrink-0 items-center justify-center rounded-xl border border-dashed border-slate-300 text-slate-300">
+                <IconGift className="h-8 w-8" />
+              </div>
+            )}
+            <div className="flex flex-col items-start gap-1.5">
+              <input
+                type="file"
+                accept="image/*"
+                onChange={async (e) => {
+                  const f = e.target.files?.[0];
+                  if (f) {
+                    try {
+                      setIcone(await arquivoParaIcone(f));
+                    } catch {
+                      toast.erro("Não foi possível processar a imagem.");
+                    }
+                  }
+                }}
+                className="block text-sm text-slate-600 file:mr-3 file:rounded-lg file:border-0 file:bg-brand-50 file:px-3 file:py-1.5 file:text-sm file:font-medium file:text-brand-700 hover:file:bg-brand-100"
+              />
+              {icone && (
+                <button type="button" onClick={() => setIcone(null)} className="text-xs font-medium text-rose-600 hover:text-rose-700">
+                  Remover imagem
+                </button>
+              )}
+              <p className="text-xs text-slate-400">Aparece em destaque nos cartões, no carrossel e na página do programa. Prefira uma foto na horizontal.</p>
+            </div>
+          </div>
+        </Campo>
         <div className="grid gap-4 sm:grid-cols-2">
           <Campo label="Valor padrão (R$)"><Entrada type="number" step="0.01" min="0" value={valor} onChange={(e) => setValor(e.target.value)} /></Campo>
           <Campo label="Duração padrão (meses)"><Entrada type="number" min="0" value={duracao} onChange={(e) => setDuracao(e.target.value)} /></Campo>
