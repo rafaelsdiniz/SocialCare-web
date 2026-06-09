@@ -12,9 +12,18 @@ export function data(iso?: string | null): string {
   return d.toLocaleDateString("pt-BR");
 }
 
+/**
+ * O backend (.NET) envia data-hora em UTC, mas sem o sufixo de fuso ("Z"),
+ * o que faz o navegador interpretar como horário local e exibir o evento
+ * adiantado (parecendo "do futuro"). Garante o "Z" quando não há fuso.
+ */
+function comoInstanteUtc(iso: string): string {
+  return /[zZ]|[+-]\d{2}:\d{2}$/.test(iso) ? iso : `${iso}Z`;
+}
+
 export function dataHora(iso?: string | null): string {
   if (!iso) return "—";
-  const d = new Date(iso);
+  const d = new Date(comoInstanteUtc(iso));
   if (Number.isNaN(d.getTime())) return "—";
   return d.toLocaleString("pt-BR", {
     day: "2-digit",
