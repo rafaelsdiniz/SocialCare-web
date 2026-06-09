@@ -105,7 +105,7 @@ function CartaoKpi({
   );
 }
 
-export function PainelIndicadores() {
+export function PainelIndicadores({ resumo = false }: { resumo?: boolean }) {
   const [dados, setDados] = useState<Indicadores | null>(null);
   const [federal, setFederal] = useState<ContextoFederal | null>(null);
   const [erro, setErro] = useState(false);
@@ -153,53 +153,57 @@ export function PainelIndicadores() {
         ))}
       </div>
 
-      {/* Gráficos — situação das famílias + ranking de programas */}
-      <div className="grid gap-4 lg:grid-cols-5">
-        <div className="lg:col-span-2">
-          <GraficoDonut titulo="Famílias por situação" dados={porStatus} cores={CORES_STATUS} />
-        </div>
-        <div className="lg:col-span-3">
-          <GraficoBarrasH titulo="Programas com mais benefícios ativos" dados={porPrograma} limite={8} />
-        </div>
-      </div>
+      {!resumo && (
+        <>
+          {/* Gráficos — situação das famílias + ranking de programas */}
+          <div className="grid gap-4 lg:grid-cols-5">
+            <div className="lg:col-span-2">
+              <GraficoDonut titulo="Famílias por situação" dados={porStatus} cores={CORES_STATUS} />
+            </div>
+            <div className="lg:col-span-3">
+              <GraficoBarrasH titulo="Programas com mais benefícios ativos" dados={porPrograma} limite={8} />
+            </div>
+          </div>
 
-      {/* Municípios — só faz sentido como gráfico com mais de um */}
-      {porMunicipio.length > 1 && (
-        <GraficoBarrasH titulo="Famílias por município" dados={porMunicipio} limite={8} />
-      )}
+          {/* Municípios — só faz sentido como gráfico com mais de um */}
+          {porMunicipio.length > 1 && (
+            <GraficoBarrasH titulo="Famílias por município" dados={porMunicipio} limite={8} />
+          )}
 
-      {/* Contexto territorial — cobertura (IBGE) + Bolsa Família (Portal da Transparência) */}
-      {(dados.populacaoAbrangida > 0 || federal?.disponivel) && (
-        <div className="grid gap-4 sm:grid-cols-2">
-          {dados.populacaoAbrangida > 0 && (
-            <CartaoContexto
-              icone={IconChart}
-              cor="#143f8e"
-              suave="#eaf0fb"
-              titulo="Cobertura nos municípios atendidos"
-              valor={dados.populacaoAbrangida.toLocaleString("pt-BR")}
-              unidade="habitantes (IBGE)"
-              detalhe={`${dados.totalMembros.toLocaleString("pt-BR")} pessoas acompanhadas${
-                dados.populacaoAbrangida > 0
-                  ? ` · ${((dados.totalMembros / dados.populacaoAbrangida) * 100).toLocaleString("pt-BR", { maximumFractionDigits: 2 })}% da população`
-                  : ""
-              }`}
-            />
+          {/* Contexto territorial — cobertura (IBGE) + Bolsa Família (Portal da Transparência) */}
+          {(dados.populacaoAbrangida > 0 || federal?.disponivel) && (
+            <div className="grid gap-4 sm:grid-cols-2">
+              {dados.populacaoAbrangida > 0 && (
+                <CartaoContexto
+                  icone={IconChart}
+                  cor="#143f8e"
+                  suave="#eaf0fb"
+                  titulo="Cobertura nos municípios atendidos"
+                  valor={dados.populacaoAbrangida.toLocaleString("pt-BR")}
+                  unidade="habitantes (IBGE)"
+                  detalhe={`${dados.totalMembros.toLocaleString("pt-BR")} pessoas acompanhadas${
+                    dados.populacaoAbrangida > 0
+                      ? ` · ${((dados.totalMembros / dados.populacaoAbrangida) * 100).toLocaleString("pt-BR", { maximumFractionDigits: 2 })}% da população`
+                      : ""
+                  }`}
+                />
+              )}
+              {federal?.disponivel && (
+                <CartaoContexto
+                  icone={IconGift}
+                  cor="#009c3b"
+                  suave="#e8f8ee"
+                  titulo="Bolsa Família no território"
+                  valor={federal.beneficiarios.toLocaleString("pt-BR")}
+                  unidade="famílias beneficiadas"
+                  detalhe={`${moeda(federal.valorTotal)} repassados${
+                    federal.mes && federal.ano ? ` · ref. ${MESES[federal.mes - 1]}/${federal.ano}` : ""
+                  } · Portal da Transparência`}
+                />
+              )}
+            </div>
           )}
-          {federal?.disponivel && (
-            <CartaoContexto
-              icone={IconGift}
-              cor="#009c3b"
-              suave="#e8f8ee"
-              titulo="Bolsa Família no território"
-              valor={federal.beneficiarios.toLocaleString("pt-BR")}
-              unidade="famílias beneficiadas"
-              detalhe={`${moeda(federal.valorTotal)} repassados${
-                federal.mes && federal.ano ? ` · ref. ${MESES[federal.mes - 1]}/${federal.ano}` : ""
-              } · Portal da Transparência`}
-            />
-          )}
-        </div>
+        </>
       )}
 
       <p className="flex items-center justify-center gap-1.5 text-[11px] text-slate-400">

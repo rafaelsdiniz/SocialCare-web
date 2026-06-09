@@ -16,6 +16,11 @@ export function setSessao(token: string, usuario: unknown): void {
   window.localStorage.setItem(USER_KEY, JSON.stringify(usuario));
 }
 
+export function salvarUsuario(usuario: unknown): void {
+  if (typeof window === "undefined") return;
+  window.localStorage.setItem(USER_KEY, JSON.stringify(usuario));
+}
+
 export function limparSessao(): void {
   if (typeof window === "undefined") return;
   window.localStorage.removeItem(TOKEN_KEY);

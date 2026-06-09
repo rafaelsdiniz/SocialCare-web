@@ -24,6 +24,7 @@ export interface ItemNav {
 
 export const navItens: ItemNav[] = [
   { href: "/painel", rotulo: "Painel", icone: IconHome, grupo: "Geral" },
+  { href: "/painel/conta", rotulo: "Minha conta", icone: IconUser, grupo: "Geral" },
 
   { href: "/painel/familias", rotulo: "Famílias", icone: IconUsers, perfis: OPERACAO, grupo: "Operação" },
   { href: "/painel/visitas", rotulo: "Visitas", icone: IconCalendar, perfis: OPERACAO, grupo: "Operação" },

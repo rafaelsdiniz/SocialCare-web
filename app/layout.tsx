@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
-import { JetBrains_Mono } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/lib/auth";
 import { ToastProvider } from "@/components/Toast";
 import { ConfirmacaoProvider } from "@/components/Confirmacao";
 import { Splash } from "@/components/Splash";
 
-const jetBrainsMono = JetBrains_Mono({
-  variable: "--font-jetbrains",
+const jakarta = Plus_Jakarta_Sans({
+  variable: "--font-jakarta",
   subsets: ["latin"],
 });
 
@@ -24,7 +24,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="pt-BR" className={`${jetBrainsMono.variable} h-full`}>
+    <html lang="pt-BR" className={`${jakarta.variable} h-full`}>
       <body className="min-h-full">
         <AuthProvider>
           <ToastProvider>

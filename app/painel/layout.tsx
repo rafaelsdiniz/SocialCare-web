@@ -49,7 +49,7 @@ export default function PainelLayout({ children }: { children: React.ReactNode }
           if (itens.length === 0) return null;
           return (
             <div key={grupo}>
-              <p className="px-3 pb-1 text-xs font-semibold uppercase tracking-wide text-slate-400">{grupo}</p>
+              <p className="px-3 pb-1 text-xs font-semibold uppercase tracking-wide text-slate-500">{grupo}</p>
               <div className="space-y-0.5">
                 {itens.map((i) => {
                   const ativo = i.href === "/painel" ? pathname === "/painel" : pathname.startsWith(i.href);
@@ -59,7 +59,7 @@ export default function PainelLayout({ children }: { children: React.ReactNode }
                       href={i.href}
                       className={cx(
                         "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
-                        ativo ? "bg-brand-50 text-brand-700" : "text-slate-600 hover:bg-slate-100",
+                        ativo ? "bg-brand-600 text-white shadow-sm" : "text-slate-300 hover:bg-white/10 hover:text-white",
                       )}
                     >
                       <i.icone className="h-[18px] w-[18px]" />
@@ -78,7 +78,7 @@ export default function PainelLayout({ children }: { children: React.ReactNode }
   return (
     <div className="flex min-h-screen bg-mist">
       {/* Sidebar desktop */}
-      <aside className="sticky top-0 hidden h-screen w-64 shrink-0 border-r border-slate-200 bg-white lg:block">
+      <aside className="sticky top-0 hidden h-screen w-64 shrink-0 border-r border-white/10 bg-navy-900 lg:block">
         {sidebar}
       </aside>
 
@@ -86,7 +86,7 @@ export default function PainelLayout({ children }: { children: React.ReactNode }
       {menuAberto && (
         <div className="fixed inset-0 z-40 lg:hidden">
           <div className="absolute inset-0 bg-slate-900/40" onClick={() => setMenuAberto(false)} />
-          <aside className="absolute left-0 top-0 h-full w-64 bg-white shadow-xl">{sidebar}</aside>
+          <aside className="absolute left-0 top-0 h-full w-64 bg-navy-900 shadow-xl">{sidebar}</aside>
         </div>
       )}
 
@@ -96,13 +96,19 @@ export default function PainelLayout({ children }: { children: React.ReactNode }
             {menuAberto ? <IconX /> : <IconMenu />}
           </button>
           <div className="ml-auto flex items-center gap-3">
-            <div className="text-right">
-              <p className="text-sm font-medium text-ink">{usuario.nome}</p>
-              <p className="text-xs text-slate-500">{usuario.perfis.map((p) => rotuloPerfil[p] ?? p).join(", ")}</p>
-            </div>
-            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-100 text-sm font-semibold text-brand-700">
-              {iniciais(usuario.nome)}
-            </span>
+            <Link
+              href="/painel/conta"
+              className="flex items-center gap-3 rounded-lg p-1 transition-colors hover:bg-slate-100"
+              title="Minha conta"
+            >
+              <div className="text-right">
+                <p className="text-sm font-medium text-ink">{usuario.nome}</p>
+                <p className="text-xs text-slate-500">{usuario.perfis.map((p) => rotuloPerfil[p] ?? p).join(", ")}</p>
+              </div>
+              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-100 text-sm font-semibold text-brand-700">
+                {iniciais(usuario.nome)}
+              </span>
+            </Link>
             <button
               onClick={() => {
                 sair();

@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { apiFetch, limparSessao, setSessao, usuarioArmazenado, getToken } from "@/lib/api";
+import { apiFetch, limparSessao, setSessao, usuarioArmazenado, getToken, salvarUsuario } from "@/lib/api";
 import type { LoginResponse, UsuarioAutenticado } from "@/lib/types";
 
 interface AuthContextValor {
@@ -9,6 +9,7 @@ interface AuthContextValor {
   carregando: boolean;
   entrar: (login: string, senha: string) => Promise<void>;
   sair: () => void;
+  atualizarUsuario: (dados: Partial<UsuarioAutenticado>) => void;
   temPerfil: (...perfis: string[]) => boolean;
 }
 
@@ -40,14 +41,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setUsuario(null);
   }, []);
 
+  const atualizarUsuario = useCallback((dados: Partial<UsuarioAutenticado>) => {
+    setUsuario((atual) => {
+      if (!atual) return atual;
+      const novo = { ...atual, ...dados };
+      salvarUsuario(novo);
+      return novo;
+    });
+  }, []);
+
   const temPerfil = useCallback(
     (...perfis: string[]) => !!usuario && perfis.some((p) => usuario.perfis.includes(p)),
     [usuario],
   );
 
   const valor = useMemo<AuthContextValor>(
-    () => ({ usuario, carregando, entrar, sair, temPerfil }),
-    [usuario, carregando, entrar, sair, temPerfil],
+    () => ({ usuario, carregando, entrar, sair, atualizarUsuario, temPerfil }),
+    [usuario, carregando, entrar, sair, atualizarUsuario, temPerfil],
   );
 
   return <AuthContext.Provider value={valor}>{children}</AuthContext.Provider>;

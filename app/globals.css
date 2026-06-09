@@ -5,8 +5,8 @@
   Primária (verde) #009C3B · Contraste (azul) #002776 · Apoio (amarelo) #FFCC29 · Alerta #F59E0B
 */
 @theme {
-  --font-sans: var(--font-jetbrains), ui-monospace, "SFMono-Regular", "Menlo", monospace;
-  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", "Menlo", monospace;
 
   /* Primária — verde-bandeira */
   --color-brand-50: #e8f8ee;

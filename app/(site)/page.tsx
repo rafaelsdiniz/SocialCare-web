@@ -1,9 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
 import { PainelIndicadores } from "@/components/site/PainelIndicadores";
-import { MapaFamilias } from "@/components/site/MapaFamilias";
+import { MapaTocantins } from "@/components/site/MapaTocantins";
 import { CarrosselProgramas } from "@/components/site/CarrosselProgramas";
 import { SeloGoverno } from "@/components/site/SeloGoverno";
+import { Reveal } from "@/components/site/Reveal";
 import {
   IconUsers,
   IconGift,
@@ -71,44 +72,58 @@ export default function HomePage() {
 
       {/* Indicadores */}
       <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-        <div className="mb-8 text-center">
+        <Reveal className="mb-8 text-center">
           <h2 className="text-2xl font-bold tracking-tight text-ink">Impacto em números</h2>
           <p className="mt-2 text-sm text-slate-500">Dados agregados e anonimizados, atualizados continuamente.</p>
-        </div>
-        <PainelIndicadores />
+        </Reveal>
+        <Reveal delay={0.1}>
+          <PainelIndicadores resumo />
+        </Reveal>
+        <Reveal delay={0.15} className="mt-6 text-center">
+          <Link
+            href="/indicadores"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-brand-700 hover:text-brand-800"
+          >
+            Ver indicadores completos <IconArrowRight className="h-4 w-4" />
+          </Link>
+        </Reveal>
       </section>
 
       {/* Onde atuamos — mapa das famílias acompanhadas */}
       <section className="bg-white">
         <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-          <div className="mb-8 text-center">
+          <Reveal className="mb-8 text-center">
             <h2 className="text-2xl font-bold tracking-tight text-ink">Onde atuamos</h2>
             <p className="mt-2 text-sm text-slate-500">
               Distribuição territorial das famílias acompanhadas, de forma agregada e anonimizada.
             </p>
-          </div>
-          <MapaFamilias />
+          </Reveal>
+          <Reveal delay={0.1}>
+            <MapaTocantins />
+          </Reveal>
         </div>
       </section>
 
       {/* Recursos */}
       <section className="bg-white">
         <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
-          <div className="mb-12 max-w-2xl">
+          <Reveal className="mb-12 max-w-2xl">
             <h2 className="text-3xl font-bold tracking-tight text-ink">Tudo o que a sua equipe precisa</h2>
             <p className="mt-3 text-slate-500">
               Uma plataforma única para registrar, acompanhar e analisar o trabalho da assistência social.
             </p>
-          </div>
+          </Reveal>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {recursos.map((r) => (
-              <div key={r.titulo} className="rounded-2xl border border-slate-200 bg-mist p-6">
-                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-600 text-white">
-                  <r.icone />
-                </span>
-                <h3 className="mt-4 text-lg font-semibold text-ink">{r.titulo}</h3>
-                <p className="mt-2 text-sm text-slate-500">{r.texto}</p>
-              </div>
+            {recursos.map((r, i) => (
+              <Reveal key={r.titulo} delay={(i % 3) * 0.1}>
+                <div className="h-full rounded-2xl border border-slate-200 bg-mist p-6 transition-shadow hover:shadow-md">
+                  <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-600 text-white">
+                    <r.icone />
+                  </span>
+                  <h3 className="mt-4 text-lg font-semibold text-ink">{r.titulo}</h3>
+                  <p className="mt-2 text-sm text-slate-500">{r.texto}</p>
+                </div>
+              </Reveal>
             ))}
           </div>
         </div>

@@ -535,6 +535,14 @@ export interface AtualizarUsuarioRequest {
   perfilIds: number[];
   ativo: boolean;
 }
+export interface AtualizarMinhaContaRequest {
+  nome: string;
+  email: string;
+}
+export interface AlterarMinhaSenhaRequest {
+  senhaAtual: string;
+  novaSenha: string;
+}
 
 // ---- Relatórios ----
 export interface FamiliasPorVulnerabilidade {
