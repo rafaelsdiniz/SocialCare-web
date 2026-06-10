@@ -5,6 +5,7 @@ import { apiFetch, ApiError } from "@/lib/api";
 import { useFetch, useDebounce } from "@/lib/hooks";
 import type { CriarUsuarioRequest, PagedResult, Usuario, UsuarioResumo } from "@/lib/types";
 import { perfis as catalogoPerfis, rotuloPerfil } from "@/lib/catalogos";
+import { emailValido } from "@/lib/validacao";
 import {
   CabecalhoPagina,
   Botao,
@@ -189,6 +190,7 @@ function UsuarioModal({ usuario, aoFechar, aoSalvar }: { usuario: Usuario | null
 
   async function salvar(e: React.FormEvent) {
     e.preventDefault();
+    if (!emailValido(email)) return toast.erro("E-mail em formato inválido.");
     if (perfilIds.length === 0) return toast.erro("Selecione ao menos um perfil.");
     setSalvando(true);
     try {

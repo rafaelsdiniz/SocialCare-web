@@ -5,6 +5,7 @@ import type { Membro, MembroRequest } from "@/lib/types";
 import { sexoOpcoes, estadoCivilOpcoes } from "@/lib/enums";
 import { parentescos, tiposDocumento, tiposRenda } from "@/lib/catalogos";
 import { paraInputDate, dataInputParaIso, hojeInputDate } from "@/lib/format";
+import { cpfValido } from "@/lib/validacao";
 import { Botao, Campo, Entrada, AreaTexto, Selecao } from "@/components/ui";
 import { IconPlus, IconX } from "@/components/icons";
 
@@ -48,6 +49,7 @@ export function MembroForm({
   const [descPcd, setDescPcd] = useState(inicial?.descricaoDeficiencia ?? "");
   const [telefone, setTelefone] = useState(inicial?.telefone ?? "");
   const [erroData, setErroData] = useState<string | null>(null);
+  const [erroDoc, setErroDoc] = useState<string | null>(null);
   const [docs, setDocs] = useState<DocLinha[]>(
     inicial?.documentos.map((d) => ({ tipoDocumentoId: d.tipoDocumentoId, numero: d.numero, orgaoEmissor: d.orgaoEmissor ?? "" })) ?? [],
   );
@@ -69,6 +71,13 @@ export function MembroForm({
       return;
     }
     setErroData(null);
+    // CPF é o tipo de documento id 1; bloqueia se os dígitos verificadores não conferem.
+    const cpfInvalido = docs.some((d) => d.tipoDocumentoId === 1 && d.numero.trim() && !cpfValido(d.numero));
+    if (cpfInvalido) {
+      setErroDoc("CPF informado é inválido (dígitos verificadores não conferem).");
+      return;
+    }
+    setErroDoc(null);
     const req: MembroRequest = {
       nome: nome.trim(),
       dataNascimento: dataIso,
@@ -171,6 +180,7 @@ export function MembroForm({
         titulo="Documentos"
         aoAdicionar={() => setDocs((d) => [...d, { tipoDocumentoId: 1, numero: "", orgaoEmissor: "" }])}
       >
+        {erroDoc && <p className="text-xs text-rose-600">{erroDoc}</p>}
         {docs.map((d, i) => (
           <div key={i} className="grid items-end gap-2 sm:grid-cols-[1fr_1fr_1fr_auto]">
             <Campo label="Tipo">

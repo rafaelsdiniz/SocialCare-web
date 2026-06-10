@@ -7,6 +7,7 @@ import { useFetch } from "@/lib/hooks";
 import type { Usuario } from "@/lib/types";
 import { rotuloPerfil } from "@/lib/catalogos";
 import { dataHora, iniciais } from "@/lib/format";
+import { emailValido } from "@/lib/validacao";
 import {
   CabecalhoPagina,
   Cartao,
@@ -33,6 +34,10 @@ export default function ContaPage() {
   async function salvarDados(e: React.FormEvent) {
     e.preventDefault();
     setErroDados(null);
+    if (!emailValido(email)) {
+      setErroDados("E-mail em formato inválido.");
+      return;
+    }
     setSalvandoDados(true);
     try {
       await apiFetch("/api/conta", { method: "PUT", body: { nome: nome.trim(), email: email.trim() } });

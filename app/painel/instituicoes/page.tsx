@@ -5,6 +5,7 @@ import { apiFetch, ApiError } from "@/lib/api";
 import { useFetch, useDebounce } from "@/lib/hooks";
 import type { CnpjResponse, InstituicaoResumo, Instituicao, InstituicaoRequest, PagedResult } from "@/lib/types";
 import { cnpj as fmtCnpj, soDigitos } from "@/lib/format";
+import { cnpjValido, emailValido } from "@/lib/validacao";
 import {
   CabecalhoPagina,
   Botao,
@@ -152,6 +153,7 @@ function InstituicaoModal({ inst, aoFechar, aoSalvar }: { inst: Instituicao | nu
   async function consultarCnpj() {
     const d = soDigitos(cnpj);
     if (d.length !== 14) return toast.erro("Informe um CNPJ com 14 dígitos.");
+    if (!cnpjValido(d)) return toast.erro("CNPJ inválido (dígitos verificadores não conferem).");
     setConsultando(true);
     try {
       const r = await apiFetch<CnpjResponse>(`/api/instituicoes-parceiras/consulta-cnpj/${d}`);
@@ -169,6 +171,8 @@ function InstituicaoModal({ inst, aoFechar, aoSalvar }: { inst: Instituicao | nu
 
   async function salvar(e: React.FormEvent) {
     e.preventDefault();
+    if (!cnpjValido(cnpj)) return toast.erro("CNPJ inválido (dígitos verificadores não conferem).");
+    if (email.trim() && !emailValido(email)) return toast.erro("E-mail em formato inválido.");
     setSalvando(true);
     const body: InstituicaoRequest = {
       nome: nome.trim(),

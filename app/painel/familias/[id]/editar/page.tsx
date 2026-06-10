@@ -9,6 +9,7 @@ import type { Familia } from "@/lib/types";
 import { statusFamiliaOpcoes, statusFamiliaValor } from "@/lib/enums";
 import { soDigitos } from "@/lib/format";
 import { EnderecoForm, enderecoVazio, enderecoParaRequest, type EnderecoState } from "@/components/painel/EnderecoForm";
+import { cepValido } from "@/lib/validacao";
 import { Botao, Campo, Cartao, Entrada, AreaTexto, Selecao, AlertaErro, CarregandoBloco } from "@/components/ui";
 import { useToast } from "@/components/Toast";
 import { IconChevronLeft } from "@/components/icons";
@@ -50,6 +51,10 @@ export default function EditarFamiliaPage() {
     setErro(null);
     if (!endereco.municipioId) {
       setErro("Selecione o município do endereço.");
+      return;
+    }
+    if (!cepValido(endereco.cep)) {
+      setErro("Informe um CEP válido (8 dígitos).");
       return;
     }
     setSalvando(true);
