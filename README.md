@@ -1,36 +1,79 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SocialCare (Web)
 
-## Getting Started
+Front-end do SocialCare, um sistema de gestão de assistência social. O projeto junta
+duas coisas no mesmo app Next.js:
 
-First, run the development server:
+- o site institucional (público): home, programas sociais, indicadores, mapa e contato;
+- o sistema (com login): a parte operacional e gerencial, que consome a SocialCare API.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+Projeto feito como trabalho da disciplina de Tópicos III.
+
+- Aluno: Rafael Silva Diniz
+- Instituição: Unitins
+- Disciplina: Tópicos III
+- Professor: Itamar
+
+## Tecnologias
+
+- Next.js 16 (App Router) com React 19 e TypeScript
+- Tailwind CSS v4
+- Autenticação por JWT (token guardado no navegador), consumindo a API direto
+
+## Pré-requisitos
+
+A SocialCare API precisa estar rodando (por padrão em `http://localhost:5128`). O
+passo a passo pra subir o back-end está no README do repositório `socialcare-api`.
+
+## Configuração
+
+Crie um arquivo `.env.local` (tem um `.env.example` de referência):
+
+```
+NEXT_PUBLIC_API_URL=http://localhost:5128
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Como rodar
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm install
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Depois é só abrir `http://localhost:3000`.
 
-## Learn More
+### Primeiro acesso
 
-To learn more about Next.js, take a look at the following resources:
+A API cria um administrador no primeiro boot:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- login: `admin`
+- senha: `ChangeMe@123`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Logado como admin dá pra cadastrar os Gestores e Assistentes Sociais na tela de Usuários.
 
-## Deploy on Vercel
+## O que dá pra fazer
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Site público: vitrine de programas, indicadores agregados, mapa e busca de CEP
+- Famílias: cadastro completo, endereço com ViaCEP/IBGE, membros (documentos e rendas) e cálculo de renda per capita
+- Operação: visitas (agendar, registrar, cancelar), atendimentos e encaminhamentos
+- Gestão: benefícios (conceder, aprovar/indeferir, encerrar), programas, instituições parceiras (com consulta de CNPJ) e relatórios
+- Administração: usuários e trilha de auditoria
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Cada módulo respeita o perfil do usuário (Administrador, Gestor ou Assistente Social).
+
+## Organização
+
+```
+app/
+  (site)/   site institucional
+  login/    autenticação
+  painel/   sistema (sidebar e proteção por perfil)
+components/  componentes de UI, do site e do painel
+lib/         api, auth, hooks, tipos, enums e formatadores
+```
+
+## Scripts
+
+- `npm run dev` - ambiente de desenvolvimento
+- `npm run build` - build de produção
+- `npm run start` - sobe o build gerado
+- `npm run lint` - ESLint
