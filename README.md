@@ -1,33 +1,32 @@
-# SocialCare — Web
+# SocialCare (Web)
 
-Front-end da plataforma **SocialCare** (gestão de assistência social). Reúne, em um
-único projeto Next.js:
+Front-end do SocialCare, um sistema de gestão de assistência social. O projeto junta
+duas coisas no mesmo app Next.js:
 
-- **Site institucional** (público): home, programas sociais, indicadores públicos, sobre e contato.
-- **Sistema integrado** (autenticado): área operacional e gerencial que cobre **todas as
-  funcionalidades da [SocialCare API](../socialcare-api)**.
+- o site institucional (público): home, programas sociais, indicadores, mapa e contato;
+- o sistema (com login): a parte operacional e gerencial, que consome a SocialCare API.
 
-> Slogan: *"Cuidar é transformar."*
+Projeto feito como trabalho da disciplina de Tópicos III.
 
-## Stack
+- Aluno: Rafael Silva Diniz
+- Instituição: Unitins
+- Disciplina: Tópicos III
+- Professor: Itamar
 
-- Next.js 16 (App Router) · React 19 · TypeScript
-- Tailwind CSS v4 (identidade visual própria)
-- Autenticação JWT (token no navegador), chamadas diretas à API
+## Tecnologias
+
+- Next.js 16 (App Router) com React 19 e TypeScript
+- Tailwind CSS v4
+- Autenticação por JWT (token guardado no navegador), consumindo a API direto
 
 ## Pré-requisitos
 
-A **SocialCare API** precisa estar em execução (por padrão em `http://localhost:5128`).
-O CORS já está habilitado na API para `http://localhost:3000`.
-
-```bash
-# na pasta da API
-dotnet run
-```
+A SocialCare API precisa estar rodando (por padrão em `http://localhost:5128`). O
+passo a passo pra subir o back-end está no README do repositório `socialcare-api`.
 
 ## Configuração
 
-Crie um `.env.local` (veja `.env.example`):
+Crie um arquivo `.env.local` (tem um `.env.example` de referência):
 
 ```
 NEXT_PUBLIC_API_URL=http://localhost:5128
@@ -40,43 +39,41 @@ npm install
 npm run dev
 ```
 
-Acesse [http://localhost:3000](http://localhost:3000).
+Depois é só abrir `http://localhost:3000`.
 
-### Acesso inicial
+### Primeiro acesso
 
-A API cria um administrador no primeiro boot (definido no `appsettings.json` da API):
+A API cria um administrador no primeiro boot:
 
-- **Login:** `admin`
-- **Senha:** `ChangeMe@123`
+- login: `admin`
+- senha: `ChangeMe@123`
 
-Com o administrador é possível cadastrar Gestores e Assistentes Sociais em **Usuários**.
+Logado como admin dá pra cadastrar os Gestores e Assistentes Sociais na tela de Usuários.
 
-## Funcionalidades cobertas
+## O que dá pra fazer
 
-| Área | Recursos |
-|---|---|
-| Público | Programas (vitrine), indicadores agregados, busca de CEP |
-| Famílias | CRUD, endereço com ViaCEP + IBGE, membros (documentos e rendas), renda per capita |
-| Operação | Visitas (agendar/editar/registrar/cancelar), atendimentos, encaminhamentos |
-| Gestão | Benefícios (conceder → aprovar/indeferir → encerrar), programas, instituições (consulta CNPJ), relatórios |
-| Administração | Usuários (perfis, senha) e trilha de auditoria |
+- Site público: vitrine de programas, indicadores agregados, mapa e busca de CEP
+- Famílias: cadastro completo, endereço com ViaCEP/IBGE, membros (documentos e rendas) e cálculo de renda per capita
+- Operação: visitas (agendar, registrar, cancelar), atendimentos e encaminhamentos
+- Gestão: benefícios (conceder, aprovar/indeferir, encerrar), programas, instituições parceiras (com consulta de CNPJ) e relatórios
+- Administração: usuários e trilha de auditoria
 
-O acesso a cada módulo respeita os perfis **Administrador**, **Gestor** e **Assistente Social**.
+Cada módulo respeita o perfil do usuário (Administrador, Gestor ou Assistente Social).
 
-## Estrutura
+## Organização
 
 ```
 app/
-  (site)/        Site institucional (header/footer próprios)
-  login/         Autenticação
-  painel/        Sistema integrado (sidebar + guarda por perfil)
-components/      UI, layout do site, componentes do painel
-lib/             api, auth, hooks, tipos, enums, catálogos e formatadores
+  (site)/   site institucional
+  login/    autenticação
+  painel/   sistema (sidebar e proteção por perfil)
+components/  componentes de UI, do site e do painel
+lib/         api, auth, hooks, tipos, enums e formatadores
 ```
 
 ## Scripts
 
-- `npm run dev` — ambiente de desenvolvimento
-- `npm run build` — build de produção
-- `npm run start` — sobe o build
-- `npm run lint` — ESLint
+- `npm run dev` - ambiente de desenvolvimento
+- `npm run build` - build de produção
+- `npm run start` - sobe o build gerado
+- `npm run lint` - ESLint
